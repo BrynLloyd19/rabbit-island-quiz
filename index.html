@@ -964,6 +964,30 @@ function App() {
   const [answers, setAnswers] = useState({});
   const [selected, setSelected] = useState(null);
 
+  function trackEvent(eventName, params = {}) {
+    if (typeof window === "undefined") return;
+    window.dataLayer = window.dataLayer || [];
+    if (typeof window.gtag === "function") {
+      window.gtag("event", eventName, params);
+    } else {
+      window.dataLayer.push({ event: eventName, ...params });
+    }
+  }
+
+  function buildShopUrl(baseUrl, recommendationKey) {
+    if (!baseUrl) return "#";
+    try {
+      const url = new URL(baseUrl);
+      url.searchParams.set("utm_source", "quiz");
+      url.searchParams.set("utm_medium", "referral");
+      url.searchParams.set("utm_campaign", "coffee_quiz");
+      url.searchParams.set("utm_content", recommendationKey || "unknown");
+      return url.toString();
+    } catch (e) {
+      return baseUrl;
+    }
+  }
+
   const handleAnswer = (value) => {
     setSelected(value);
     setTimeout(() => {
@@ -971,9 +995,14 @@ function App() {
       const newAnswers = { ...answers, [key]: value };
       setAnswers(newAnswers);
       setSelected(null);
-      if (step + 1 < questions.length) {
+     if (step + 1 < questions.length) {
         setStep(step + 1);
       } else {
+        const resultKey = getRecommendation(newAnswers);
+        trackEvent("quiz_complete", {
+          quiz_name: "coffee_finder",
+          recommendation: resultKey,
+        });
         setScreen("result");
       }
     }, 300);
@@ -1005,7 +1034,7 @@ function App() {
               Six quick questions. One perfect match.<br />
               We'll find the coffee that fits you best from our range of specialty roasts.
             </div>
-            <button className="start-btn" onClick={() => setScreen("quiz")}>
+            <button className="start-btn" onClick={() => { setScreen("quiz"); trackEvent("quiz_start", { quiz_name: "coffee_finder" }); }}>
               Let's go →
             </button>
           </div>
@@ -1082,7 +1111,7 @@ function App() {
               )}
 
               {recommendation.dripBagUrl && (
-                <div className="drip-bag-callout" onClick={() => window.open(recommendation.dripBagUrl, "_blank")}>
+                <div className="drip-bag-callout" onClick={() => { trackEvent("drip_bag_clicked", { quiz_name: "coffee_finder", recommendation: recommendationKey, destination_url: buildShopUrl(recommendation.dripBagUrl, recommendationKey) }); window.open(buildShopUrl(recommendation.dripBagUrl, recommendationKey), "_blank"); }}>
                   <span className="drip-bag-icon">✈️</span>
                   <div className="drip-bag-text">
                     <span className="drip-bag-title">Also available as drip bags.</span>
@@ -1097,7 +1126,7 @@ function App() {
                 <span className="brew-text">{recommendation.brew}</span>
               </div>
 
-              <button className="cta-btn" onClick={() => window.open(recommendation.url, "_blank")}>
+              <button className="cta-btn" onClick={() => { trackEvent("shop_now_clicked", { quiz_name: "coffee_finder", recommendation: recommendationKey, destination_url: buildShopUrl(recommendation.url, recommendationKey) }); window.open(buildShopUrl(recommendation.url, recommendationKey), "_blank"); }}>
                 Shop Now →
               </button>
               <button className="retake-btn" onClick={reset}>
