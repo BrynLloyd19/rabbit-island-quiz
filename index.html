@@ -145,34 +145,32 @@ const coffees = {
     ],
   },
   timor_washed: {
-    name: "Timor-Leste Railaco",
-    tagline: "Washed single origin",
+    name: "Timor-Leste Organic",
+    tagline: "Organic washed single origin",
     description:
-      "From smallholder family farms in Timor-Leste's Ermera district, one of the oldest coffee-growing regions in Southeast Asia. Washed and sun-dried on raised beds at 1,400–1,800m. The tasting notes are caramel, tobacco leaf, nutmeg, quince and tamarind. It sounds unusual, and it is. In the best possible way. Grounded, smooth and quietly complex.",
-    tastingNotes: "Caramel, Tobacco Leaf, Nutmeg, Quince & Tamarind",
-    flavours: "Caramel · Nutmeg · Quince",
+      "From smallholder family farms in Maulau, high in Timor-Leste's Ainaro district. Organic, wild-grown and sourced direct trade through the Wholemeal Cafe in Takaka, with fair prices paid straight to the growers. The tasting notes are dark chocolate, ripe plum and molasses, with a full, syrupy body. Low acidity, high sweetness, deeply satisfying.",
+    tastingNotes: "Dark Chocolate, Ripe Plum & Molasses",
+    flavours: "Dark chocolate · Ripe plum · Molasses",
     brew: "Suits espresso, filter, plunger, AeroPress and stovetop",
     animalEmoji: "🐊",
     funFact: "The national animal of Timor-Leste is the crocodile. In Timorese legend, the island was formed from the body of a sacred crocodile named Lafaek Diak, who sacrificed itself for a boy it befriended. Every mountain ridge was once a bump on its back.",
     gradient: "linear-gradient(135deg, #3a6b52 0%, #254636 100%)",
     url: "https://rabbitislandcoffee.co.nz/collections/coffee/products/timor-leste",
     details: [
-      { label: "Type", value: "100% Arabica" },
-      { label: "Varietal", value: "Bourbon, Timor Hybrid, Typica" },
+      { label: "Type", value: "100% Arabica, Organic" },
+      { label: "Varietal", value: "Hibrido de Timor-Leste (HDT, Timor Hybrid)" },
       { label: "Process", value: "Washed" },
-      { label: "Roast", value: "Medium" },
-      { label: "Score", value: "83+" },
-      { label: "Cup profile", value: "Caramel, Tobacco Leaf, Nutmeg, Quince & Tamarind" },
-      { label: "Producer", value: "Smallholder farmers, Ermera district" },
-      { label: "Origin", value: "Ermera, Timor-Leste" },
-      { label: "Elevation", value: "1,400–1,800 m.a.s.l" },
+      { label: "Cup profile", value: "Dark Chocolate, Ripe Plum & Molasses" },
+      { label: "Producer", value: "Smallholder farmers, Ainaro district" },
+      { label: "Origin", value: "Maulau, Maubisse, Ainaro district, Timor-Leste" },
+      { label: "Elevation", value: "1,400–1,550 m.a.s.l" },
     ],
   },
   timor_natural: {
     name: "Timor-Leste Natural",
     tagline: "Anaerobic natural, bold & adventurous",
     description:
-      "Same stunning Ermera region as our Railaco, but processed the wild way: anaerobic natural, where the whole cherry ferments before drying. The result is something else entirely. Tasting notes: dark berry, fruit toast, and a lingering sweetness that hangs around. Not your everyday cup. Then again, you didn't pick 'surprise me' to play it safe.",
+      "From Timor-Leste's stunning Ermera region, processed the wild way: anaerobic natural, where the whole cherry ferments before drying. The result is something else entirely. Tasting notes: dark berry, fruit toast, and a lingering sweetness that hangs around. Not your everyday cup. Then again, you didn't pick 'surprise me' to play it safe.",
     tastingNotes: "Dark Berry, Fruit Toast & Lingering Sweetness",
     flavours: "Dark berry · Fruit toast · Intense",
     brew: "Best on filter, plunger or AeroPress",
@@ -388,7 +386,7 @@ function getRecommendation(answers) {
   if (brew === "plunger")          scores.konga += 2;
   if (brew === "espresso")         scores.konga -= 2;
 
-  // Timor Railaco: espresso, filter, plunger, aeropress, stovetop — NOT pod
+  // Timor Organic: espresso, filter, plunger, aeropress, stovetop — NOT pod
   // Roast: Medium → scores for medium strength
   if (flavour === "earthy")        scores.timor_washed += 3;
   if (flavour === "balanced")      scores.timor_washed += 2;
